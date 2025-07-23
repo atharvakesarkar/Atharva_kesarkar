@@ -25,6 +25,7 @@ ul {
 
 /* Utility Colors & Variables (based on user's original and refined) */
 :root {
+    /* Original variables you provided */
     --primary-blue: #0f4c81; /* Deep Blue, from user's original CSS */
     --light-peach-bg: #fef6f0; /* From user's original CSS */
     --accent-blue-light: #3b82f6; /* From user's original CSS */
@@ -33,6 +34,11 @@ ul {
     --light-grey-border: #cbd5e1; /* From user's original CSS */
     --white-bg: #ffffff;
     --light-bg-variant: #f8f8f8; /* Slightly off-white for subtle contrast */
+
+    /* NEWLY ADDED for your navbar's background-color. */
+    /* If you want it to be the same as --primary-blue, you can remove this */
+    /* and change .navbar's background-color to var(--primary-blue). */
+    --primary-dark-blue: #1A2A47; /* A common, slightly darker shade for primary dark blue */
 
     /* Refined general variables for consistency */
     --text-color-primary: var(--dark-text);
@@ -54,7 +60,6 @@ ul {
     --spacing-lg: 40px;
     --spacing-xl: 60px;
 }
-
 /* Reusable Container & Section Titles */
 .container {
     max-width: 1200px;
@@ -98,7 +103,6 @@ section {
     margin-left: auto;
     margin-right: auto;
 }
-
 /* CTA Buttons */
 .cta-button {
     display: inline-flex; /* Use flex to align content */
@@ -142,87 +146,200 @@ section {
     box-shadow: 0 4px 10px var(--shadow-medium);
 }
 
-/* Navbar */
+/* New: Container for buttons */
+.cta-buttons-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically if container has height */
+    flex-wrap: wrap; /* Allow buttons to wrap to next line if needed */
+    gap: 15px; /* Add some space between buttons */
+}
+
+/* Media Query for Mobile Screens */
+@media (max-width: 768px) { /* Adjust this breakpoint as needed */
+    .cta-buttons-container {
+        /* These properties are already set above, but good to re-state for clarity in media query */
+        display: flex;
+        justify-content: center;
+        align-items: center; /* This centers them vertically if the container has height */
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 15px; /* Space between stacked buttons */
+        width: 100%; /* Ensure container takes full width */
+        padding: 10px; /* Optional: Add some padding around the buttons */
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    .cta-button {
+        width: 80%; /* Make buttons take up more width on mobile */
+        max-width: 300px; /* Limit maximum width for larger mobile devices */
+        /* You might want to adjust font size or padding specifically for mobile here too */
+        font-size: 0.9em; /* Example: slightly smaller font */
+        padding: 10px 20px; /* Example: slightly less padding */
+    }
+}
+/* CTA Buttons */
+.cta-button {
+    display: inline-flex; /* Use flex to align content */
+    align-items: center;
+    justify-content: center;
+    margin: auto, 0; /* This margin property might need adjustment depending on overall layout. If you want space between buttons, consider 'gap' on the parent flex container instead. */
+    padding: 12px 25px;
+    border-radius: var(--border-radius-lg); /* Pill shape */
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 1em;
+}
+
+.cta-button.primary {
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text);
+    border-color: var(--button-primary-bg);
+}
+
+.cta-button.primary:hover {
+    background-color: #0c3a64; /* Darker blue */
+    border-color: #0c3a64;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-medium);
+}
+
+.cta-button.secondary {
+    background-color: transparent;
+    color: var(--button-secondary-text);
+    border-color: var(--button-secondary-border);
+}
+
+.cta-button.secondary:hover {
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-medium);
+}
+
+/* Styles for the hero-buttons container (applies to all screen sizes initially) */
+.hero-buttons {
+    display: flex; /* Enable flexbox for the container */
+    justify-content: center; /* Center items horizontally within this container */
+    align-items: center; /* Align items vertically (if container has height) */
+    gap: 20px; /* Space between the buttons on larger screens */
+    /* You might want to adjust this margin-top/bottom based on your layout */
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+
+/* Media Query for Mobile Screens */
+@media (max-width: 768px) { /* Adjust this breakpoint as needed for your definition of 'mobile' */
+    .hero-buttons {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 15px; /* Adjust gap for vertical stacking */
+        width: 100%; /* Ensure container takes full width on mobile */
+        padding: 0 15px; /* Optional: Add some horizontal padding to prevent buttons from touching edges */
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    .cta-button {
+        width: 90%; /* Make buttons take up most of the width on mobile */
+        max-width: 350px; /* Limit maximum width for larger mobile devices */
+        font-size: 0.95em; /* Slightly adjust font size for mobile readability */
+        padding: 12px 20px; /* Adjust padding for mobile */
+    }
+}
+
+
+/* Navbar Section */
 .navbar {
-    background-color: var(--primary-blue);
-    color: var(--white-bg);
-    padding: 15px 0;
-    box-shadow: 0 2px 10px var(--shadow-medium);
-    position: sticky;
+    background-color: var(--primary-dark-blue); /* Assuming you have this variable */
+    padding: 15px 20px;
+    position: sticky; /* Make it stick to the top */
     top: 0;
-    z-index: 1000;
+    z-index: 1000; /* Ensure it stays above other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow */
 }
 
 .nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    width: 100%;
+    max-width: 1300px; /* Adjust based on your preferred max width */
+    margin: 0 auto; /* Center the container */
 }
 
 .nav-logo span {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.8em;
+    color: var(--white-bg); /* Assuming white text for logo */
+    font-size: 1.8rem; /* Adjust font size as needed */
     font-weight: 700;
-    color: var(--white-bg);
+    text-decoration: none;
+    cursor: default; /* If it's just text and not a link */
+    user-select: none; /* Prevent text selection */
 }
 
+/* Desktop Navigation Menu */
 .nav-menu {
-    list-style: none;
+    display: flex; /* Display horizontally on desktop */
+    list-style: none; /* Remove bullet points */
     margin: 0;
     padding: 0;
-    display: flex;
 }
 
 .nav-menu li {
-    margin-left: var(--spacing-lg);
+    margin: 0 15px; /* Space between desktop menu items */
 }
 
 .nav-link {
-    color: var(--white-bg);
+    color: var(--white-bg); /* Assuming white text for links */
     text-decoration: none;
+    font-size: 1rem;
     font-weight: 500;
-    font-size: 1.05em;
-    transition: color 0.3s ease;
-    position: relative;
-    padding-bottom: 5px;
+    padding: 8px 0;
+    transition: color 0.3s ease-in-out;
+    position: relative; /* For underline effect */
 }
 
-.nav-link:hover, .nav-link.active {
-    color: var(--accent-blue-light);
+.nav-link:hover {
+    color: var(--button-primary-bg); /* Example hover color (your primary button color) */
 }
 
+/* Optional: Underline effect on hover */
 .nav-link::after {
     content: '';
     position: absolute;
+    bottom: -5px;
+    left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--accent-blue-light);
-    left: 0;
-    bottom: 0;
-    transition: width 0.3s ease;
+    background-color: var(--button-primary-bg);
+    transition: width 0.3s ease-in-out;
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after {
     width: 100%;
 }
 
+
+/* Hamburger Icon - Hidden on Desktop by default */
 .hamburger {
-    display: none;
+    display: none; /* Will be shown via media query on mobile */
     flex-direction: column;
     cursor: pointer;
+    z-index: 1002; /* Ensure hamburger is above menu when active */
 }
 
 .hamburger .bar {
     height: 3px;
-    width: 25px;
+    width: 28px; /* Slightly wider bars */
     background-color: var(--white-bg);
-    margin: 4px 0;
+    margin: 5px 0; /* More space between bars */
     transition: all 0.3s ease-in-out;
+    border-radius: 2px; /* Slightly rounded bars */
 }
 
+/* Hamburger active state (transforms into 'X') */
 .hamburger.active .bar:nth-child(2) {
     opacity: 0;
 }
@@ -233,6 +350,75 @@ section {
 
 .hamburger.active .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
+}
+
+
+/* ----------------------- Media Query for Mobile Screens ----------------------- */
+@media (max-width: 992px) { /* Adjust this breakpoint as needed, 992px is common for tablets/laptops */
+
+    .nav-container {
+        padding: 0 15px; /* Add some padding for smaller screens */
+    }
+
+    /* Show hamburger icon on mobile */
+    .hamburger {
+        display: flex;
+    }
+
+    /* Hide desktop navigation menu by default on mobile */
+    .nav-menu {
+        display: none; /* Initially hidden */
+        flex-direction: column; /* Stack links vertically */
+        width: 100%; /* Full width */
+        position: absolute; /* Position relative to .navbar */
+        top: 70px; /* Adjust based on your navbar's actual height */
+        left: 0;
+        background-color: var(--primary-dark-blue); /* Background for the mobile menu */
+        border-top: 1px solid rgba(255, 255, 255, 0.1); /* Optional: Separator line */
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Stronger shadow for mobile menu */
+        transition: all 0.4s ease-in-out; /* Smooth transition for showing/hiding */
+        opacity: 0; /* Start hidden for animation */
+        transform: translateY(-20px); /* Start slightly above for animation */
+        pointer-events: none; /* Prevent clicks when hidden */
+        z-index: 999; /* Ensure menu is below hamburger but above content */
+    }
+
+    /* When the nav-menu has the 'active' class (added by JS) */
+    .nav-menu.active {
+        display: flex; /* Show the menu */
+        opacity: 1; /* Fade in */
+        transform: translateY(0); /* Slide into place */
+        pointer-events: all; /* Enable clicks */
+    }
+
+    .nav-menu li {
+        margin: 15px 0; /* Vertical space between stacked links */
+    }
+
+    .nav-link {
+        font-size: 1.15rem; /* Larger links for easier tapping */
+        padding: 10px 0; /* More padding for tap targets */
+        display: block; /* Make links take full width for easier tapping */
+    }
+
+    /* Remove underline hover effect on mobile (optional, as it might feel clunky) */
+    .nav-link::after {
+        display: none;
+    }
+}
+
+/* Adjust for even smaller screens if necessary (e.g., small phones) */
+@media (max-width: 480px) {
+    .nav-logo span {
+        font-size: 1.5rem; /* Smaller logo on very small screens */
+    }
+
+    .hamburger .bar {
+        width: 22px;
+        margin: 3px 0;
+    }
 }
 
 /* Hero Section */
