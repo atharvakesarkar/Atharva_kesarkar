@@ -1150,6 +1150,34 @@ section {
     margin-bottom: var(--spacing-md);
 }
 
+.testimonial-name {
+    color: #0f4c81; /* Highlight color for names */
+    font-size: 1.2em;
+    margin-bottom: 0.2em;
+}
+
+.testimonial-relationship {
+    color: #6c757d; /* Different color for relationship */
+    font-style: italic;
+    font-size: 0.9em;
+    display: block;
+    margin-bottom: 1em;
+}
+
+.testimonial-text {
+    line-height: 1.6;
+}
+
+.delete-testimonial {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
 /* Form Group Styling */
 .form-group {
     margin-bottom: var(--spacing-md);
