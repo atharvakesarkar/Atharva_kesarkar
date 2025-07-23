@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -13,13 +13,6 @@
         <!-- Font Awesome for icons -->
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <!-- Firebase SDKs -->
-        <script
-            src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-        <script
-            src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-        <script
-            src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     </head>
     <body>
         <!-- Navbar Section -->
@@ -299,7 +292,7 @@
                     <div class="project-card">
                         <div class="project-image">
                             <!-- IMPORTANT: Update image path -->
-                            <img src="professional_website/images/hand_gesture.jpeg"
+                            <img src="professional_website/images/ai_fitness.webp"
                                 alt="AI Fitness Advisor">
                         </div>
                         <div class="project-content">
@@ -837,68 +830,58 @@
             </div>
         </section>
 
-        <!-- testiomanal -->
-
-        <div class="testimonials-section">
-            <h3>What People Are Saying</h3>
-            <div id="testimonials-grid" class="testimonials-grid"></div>
-        </div>
-
-        <div class="add-testimonial-form">
-            <h3>Share Your Experience</h3>
-
-            <!-- Sign In / Auth Status -->
-            <p id="auth-message">Please sign in with Google to submit a
-                testimonial.</p>
-            <button id="sign-in-button" class="cta-button green">Sign in with
-                Google</button>
-            <button id="sign-out-button" class="cta-button red"
-                style="display: none;">Sign Out</button>
-
-            <!-- Testimonial Form -->
-            <form id="testimonial-form" style="display: none;">
-                <p>Your ID: <span id="user-id">Loading...</span></p>
-
-                <div class="form-group">
-                    <label for="testimonial-name">Your Name</label>
-                    <input type="text" id="testimonial-name" name="name"
-                        placeholder="Enter your name" required>
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title">What People Are Saying</h2>
+                <!-- Testimonials will be loaded here by JavaScript -->
+                <div class="testimonials-grid" id="testimonials-grid">
+                    <!-- Testimonial cards will be dynamically inserted here -->
                 </div>
 
-                <div class="form-group">
-                    <label for="testimonial-email">Your Email</label>
-                    <input type="email" id="testimonial-email" name="email"
-                        placeholder="Enter your email" required>
-                </div>
+                <div class="testimonial-form-section">
+                    <h3 class="section-subtitle">Share Your Experience</h3>
+                    <p class="section-description">Please sign in with Google to
+                        submit a testimonial.</p>
 
-                <div class="form-group">
-                    <label for="testimonial-relationship">I am a...</label>
-                    <select id="testimonial-relationship" name="relationship"
-                        required>
-                        <option value>Select one</option>
-                        <option value="Client">Client</option>
-                        <option value="Student">Student</option>
-                        <option value="Colleague">Working Colleague</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+                    <!-- Authentication Buttons and User ID Display -->
+                    <div class="auth-controls">
+                        <button id="sign-in-button" class="cta-button primary">Sign In with Google</button>
+                        <button id="sign-out-button" class="cta-button secondary" style="display: none;">Sign Out</button>
+                        <p class="user-status">Your ID: <span id="user-id">Not signed in</span></p>
+                    </div>
 
-                <div class="form-group">
-                    <label for="testimonial-feedback">Your Feedback</label>
-                    <textarea id="testimonial-feedback" name="feedback" rows="5"
-                        placeholder="Share your experience..."
-                        required></textarea>
+                    <!-- Testimonial Submission Form -->
+                    <form id="testimonial-form" class="testimonial-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="testimonial-name">Your Name</label>
+                            <input type="text" id="testimonial-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="testimonial-email">Your Email</label>
+                            <input type="email" id="testimonial-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="testimonial-relationship">Relationship (e.g., Client, Colleague)</label>
+                            <input type="text" id="testimonial-relationship" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="testimonial-feedback">Your Feedback</label>
+                            <textarea id="testimonial-feedback" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button primary">Submit Testimonial</button>
+                    </form>
                 </div>
+            </div>
+        </section>
 
-                <button type="submit" class="cta-button green-button">Submit
-                    Feedback</button>
-            </form>
-        </div>
 
         <!-- Contact Section -->
         <section id="lets-connect" class="contact-section">
             <div class="container">
                 <h2 class="section-title">Let's Connect</h2>
+                <p class="section-description">Have a project in mind or just
+                    want to say hello? Reach out!</p>
                 <div class="contact-content">
                     <div class="contact-info">
                         <h3>Get in Touch</h3>
@@ -908,22 +891,22 @@
                         <ul>
                             <li><i class="fas fa-envelope"></i>
                                 <strong>Email:</strong>
-                                atharva@example.com</li>
+                                kesarkaratharva24@gmail.com</li>
                             <li><i class="fas fa-phone"></i>
                                 <strong>Phone:</strong>
-                                +91 98765 43210</li>
+                                +91 9820919318</li>
                             <li><i class="fas fa-map-marker-alt"></i>
                                 <strong>Location:</strong>
                                 Mumbai, India</li>
                         </ul>
                         <div class="social-links-contact">
-                            <a href="#" target="_blank" aria-label="LinkedIn"><i
+                            <a href="https://www.linkedin.com/in/atharva-kesarkar-bb13b7345?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" aria-label="LinkedIn"><i
                                     class="fab fa-linkedin"></i></a>
-                            <a href="#" target="_blank" aria-label="GitHub"><i
+                            <a href="https://github.com/atharvakesarkar" target="_blank" aria-label="GitHub"><i
                                     class="fab fa-github"></i></a>
-                            <a href="#" target="_blank" aria-label="Twitter"><i
+                            <a href="https://x.com/kesarkaratharva?t=5wjV9bc9Hs514iLJFw6ioQ&s=09" target="_blank" aria-label="Twitter"><i
                                     class="fab fa-twitter"></i></a>
-                            <a href="#" target="_blank"
+                            <a href="https://www.instagram.com/_kesarkar_atharva?igsh=MTVjend0bzNzZjVsZA==" target="_blank"
                                 aria-label="Instagram"><i
                                     class="fab fa-instagram"></i></a>
                         </div>
@@ -968,13 +951,13 @@
                         <p class="footer-tagline">Building the future, one line
                             of code at a time.</p>
                         <div class="footer-social-icons">
-                            <a href="#" target="_blank" aria-label="LinkedIn"><i
+                            <a href="https://www.linkedin.com/in/atharva-kesarkar-bb13b7345?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" aria-label="LinkedIn"><i
                                     class="fab fa-linkedin"></i></a>
-                            <a href="#" target="_blank" aria-label="GitHub"><i
+                            <a href="https://github.com/atharvakesarkar" target="_blank" aria-label="GitHub"><i
                                     class="fab fa-github"></i></a>
-                            <a href="#" target="_blank" aria-label="Twitter"><i
+                            <a href="https://x.com/kesarkaratharva?t=5wjV9bc9Hs514iLJFw6ioQ&s=09" target="_blank" aria-label="Twitter"><i
                                     class="fab fa-twitter"></i></a>
-                            <a href="#" target="_blank"
+                            <a href="https://www.instagram.com/_kesarkar_atharva?igsh=MTVjend0bzNzZjVsZA==" target="_blank"
                                 aria-label="Instagram"><i
                                     class="fab fa-instagram"></i></a>
                         </div>
@@ -1018,8 +1001,6 @@
                 <div class="footer-bottom">
                     <p>&copy; <span id="current-year"></span> Atharva
                         Kesarkar. All rights reserved.</p>
-                    <p>Built with ❤️ using pure HTML, CSS, JavaScript, and
-                        Firebase</p>
                 </div>
             </div>
         </footer>
@@ -1032,22 +1013,14 @@
             </div>
         </div>
 
-        <!-- Link to your custom JavaScript file -->
+        <!-- Firebase SDKs (Moved to end of body for better performance and to ensure they load before script.js) -->
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+        <!-- Google Identity Services (for signInWithRedirect, if needed, though Firebase auth handles it) -->
+        <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
+
+        <!-- Link to your custom JavaScript file (MUST be after Firebase SDKs) -->
         <script src="professional_website/script.js"></script>
-        <!-- Firebase SDK -->
-        <script
-            src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
-        <script
-            src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js"></script>
-        <script
-            src="https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js"></script>
-        <script
-            src="https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js"></script>
-        <script src="https://accounts.google.com/gsi/client" async
-            defer></script>
-
-        <!-- Your external JavaScript -->
-        <script src="professional_website/testimonials.js"></script>
-
     </body>
 </html>
