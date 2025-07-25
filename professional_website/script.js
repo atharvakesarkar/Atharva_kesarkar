@@ -2,16 +2,13 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- SUPABASE INITIALIZATION ---
-    // Your actual Supabase project URL and anon public key are inserted here.
-    const SUPABASE_URL = 'https://hndbkuhmvhzxhzpbnwyi.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhuZGJrdWhtdmh6eGh6cGJud3lpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM0MjcwOTUsImV4cCI6MjA2OTAwMzA5NX0.bsOuAUJ37eWJXDZLLxuSy8V5Ysn1wLlGmji7L1cWLYU';
-
-    // Initialize the Supabase client
-    const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Access the globally initialized Supabase client from index.html
+    // This assumes you have the <script> block in your index.html that sets window.supabase
+    const supabase = window.supabase;
     // --- END SUPABASE INITIALIZATION ---
 
 
-    // 1. Mobile Navigation Toggle (Hamburger Menu) - No change
+    // 1. Mobile Navigation Toggle (Hamburger Menu)
     const mobileMenu = document.getElementById('mobile-menu');
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -30,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Smooth Scrolling for Navigation Links - No change
+    // 2. Smooth Scrolling for Navigation Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -56,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Dynamic Navbar - No change
+    // 3. Dynamic Navbar
     const navbar = document.getElementById('navbar');
     const scrollThreshold = 50;
 
@@ -70,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Back to Top Button - No change (assuming HTML/CSS are added)
+    // 4. Back to Top Button
     const backToTopButton = document.getElementById('back-to-top-btn');
     if (backToTopButton) {
         window.addEventListener('scroll', () => {
@@ -86,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Custom Message Box Functionality - No change
+    // 5. Custom Message Box Functionality
     const messageBox = document.getElementById('message-box');
     const messageText = document.getElementById('message-text');
     const messageCloseBtn = document.getElementById('message-close');
@@ -113,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         messageCloseBtn.addEventListener('click', hideMessage);
     }
 
-    // 6. Form Handling (Contact Form) - No change
+    // 6. Form Handling (Contact Form)
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
@@ -169,7 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to fetch testimonials from Supabase
     async function fetchTestimonials() {
-        if (!testimonialsContainer) return;
+        // Only proceed if supabase client is available and container exists
+        if (!supabase || !testimonialsContainer) {
+            console.error('Supabase client or testimonials container not found.');
+            return;
+        }
+
         testimonialsContainer.innerHTML = '<p class="loading-message">Loading testimonials...</p>';
 
         try {
@@ -187,11 +189,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error fetching testimonials:', error.message);
             testimonialsContainer.innerHTML = '<p class="error-message">Failed to load testimonials. Please try again later.</p>';
-            showMessage('Could not load testimonials. Check your connection.', 'error');
+            showMessage('Could not load testimonials. Check your connection or Supabase setup.', 'error');
         }
     }
 
-    // Function to render testimonials (mostly no change, just rendering the data from Supabase)
+    // Function to render testimonials
     function renderTestimonials(testimonials) {
         if (testimonialsContainer) {
             testimonialsContainer.innerHTML = ''; // Clear existing testimonials
@@ -224,8 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Get values from the form fields using their 'name' attributes
             const author = testimonialForm.querySelector('[name="testimonial-author"]').value.trim();
-            const email = testimonialForm.querySelector('[name="testimonial-email"]').value.trim(); // New field
-            const relationship = testimonialForm.querySelector('[name="testimonial-relationship"]').value.trim(); // New field
+            const email = testimonialForm.querySelector('[name="testimonial-email"]').value.trim();
+            const relationship = testimonialForm.querySelector('[name="testimonial-relationship"]').value.trim();
             const message = testimonialForm.querySelector('[name="testimonial-message"]').value.trim();
             const rating = parseInt(testimonialForm.querySelector('[name="testimonial-rating"]').value);
 
@@ -242,11 +244,16 @@ document.addEventListener('DOMContentLoaded', () => {
             showMessage('Submitting your testimonial...', 'info');
 
             try {
+                // Ensure supabase client is available before inserting
+                if (!supabase) {
+                    throw new Error('Supabase client is not initialized.');
+                }
+
                 // Use Supabase client to insert a new row into 'testimonials' table
                 const { data, error } = await supabase
                     .from('testimonials')
                     .insert([
-                        { author: author, email: email, relationship: relationship, message: message, rating: rating } // Include new fields
+                        { author: author, email: email, relationship: relationship, message: message, rating: rating }
                     ]);
 
                 if (error) {
@@ -269,13 +276,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 7. Dynamic Content
 
-    // Set Current Year in Footer - No change
+    // Set Current Year in Footer
     const currentYearSpan = document.getElementById('current-year');
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
-    // Animate Skill Progress Bars on Scroll - No change
+    // Animate Skill Progress Bars on Scroll
     const skillBars = document.querySelectorAll('.skill-bar');
     const skillsSection = document.getElementById('skills');
 
@@ -298,9 +305,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addEventListener('scroll', animateSkills);
+    // Initial check in case skills section is in view on load
     animateSkills();
 
-    // 8. Dark Mode Toggle - No change (assuming HTML/CSS are added)
+    // 8. Dark Mode Toggle
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const body = document.body;
 
