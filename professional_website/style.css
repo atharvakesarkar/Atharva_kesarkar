@@ -1054,30 +1054,217 @@ section {
 
 
 /* Testimonials Section */
-/* Add to your style.css if you want specific styling for these fields within the displayed testimonial */
+/* ======================== */
+/* 7. Testimonials Section */
+/* ======================== */
+.testimonials-section {
+    padding: 80px 0;
+    background-color: var(--light-peach-bg); /* Or a slightly different light background */
+    text-align: center;
+}
 
-.testimonial-card .testimonial-info {
+.testimonials-section .section-title {
+    margin-bottom: 40px;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 30px; /* Space between cards */
+    margin-top: 40px;
+    margin-bottom: 60px; /* Space before the form section */
+}
+
+.testimonial-card {
+    background-color: var(--white-bg); /* Or a light card background */
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes author/rating to bottom */
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px); /* Subtle lift effect */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.testimonial-text {
+    font-size: 1.1em;
+    font-style: italic;
+    color: var(--dark-text);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.testimonial-author {
+    font-weight: 600;
+    color: var(--primary-color); /* Use your primary branding color */
+    margin-top: 15px;
+    font-size: 1.05em;
+}
+
+.testimonial-rating {
+    font-size: 1.2em; /* Larger stars */
+    color: #FFD700; /* Gold color for stars */
+    margin-top: 10px;
+    letter-spacing: 2px; /* Space out the stars */
+}
+
+.testimonial-info {
     font-size: 0.9em;
-    color: var(--text-color-light); /* Assuming you have a lighter text color variable */
-    margin-top: 5px;
+    color: var(--text-color-light); /* Lighter text for supplementary info */
+    margin-top: 10px;
+    display: flex; /* Use flex for email/relationship/date alignment */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 8px 15px; /* Space between items, row-gap and column-gap */
+    align-items: center;
 }
 
-.testimonial-card .testimonial-email,
-.testimonial-card .testimonial-relationship {
+.testimonial-email,
+.testimonial-relationship,
+.testimonial-date {
     display: inline-block;
-    margin-right: 10px;
-    background-color: var(--accent-skin); /* Example: a light background */
-    padding: 3px 8px;
-    border-radius: 5px;
-    font-size: 0.85em;
+    padding: 4px 10px;
+    background-color: var(--accent-skin); /* A subtle background for these tags */
+    border-radius: 20px;
     color: var(--dark-text); /* Ensure good contrast */
+    font-size: 0.85em;
+    font-weight: 500;
 }
 
-/* For dark mode */
-.dark-mode .testimonial-card .testimonial-email,
-.dark-mode .testimonial-card .testimonial-relationship {
-    background-color: var(--dark-mode-card-bg); /* Use a suitable dark mode background */
+/* --- Testimonial Submission Form Styles --- */
+.testimonial-form-section {
+    background-color: var(--white-bg);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    max-width: 700px; /* Limit form width */
+    margin: 0 auto; /* Center the form */
+    text-align: left; /* Align form labels to the left */
+}
+
+.testimonial-form-section .section-subtitle {
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.testimonial-form-section .section-description {
+    font-size: 1.1em;
+    color: var(--text-color-light);
+    margin-bottom: 30px;
+}
+
+/* Ensure form-group provides proper spacing */
+.testimonial-form .form-group {
+    margin-bottom: 20px; /* Space between form fields */
+}
+
+.testimonial-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark-text);
+}
+
+.testimonial-form input[type="text"],
+.testimonial-form input[type="email"],
+.testimonial-form textarea,
+.testimonial-form select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1em;
+    color: var(--dark-text);
+    background-color: var(--light-peach-bg); /* Light background for inputs */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-form input[type="text"]:focus,
+.testimonial-form input[type="email"]:focus,
+.testimonial-form textarea:focus,
+.testimonial-form select:focus {
+    border-color: var(--accent-blue); /* Your accent blue for focus */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Soft blue glow */
+    outline: none;
+}
+
+.testimonial-form textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px;
+}
+
+.testimonial-form button.cta-button {
+    width: auto; /* Allow button to size itself */
+    padding: 12px 30px;
+    font-size: 1.1em;
+    margin-top: 20px; /* Space above button */
+    border-radius: 8px;
+    /* Uses existing cta-button styles */
+}
+
+/* Dark Mode Adjustments for Testimonials */
+.dark-mode .testimonials-section {
+    background-color: var(--dark-mode-bg); /* Darker background */
+}
+
+.dark-mode .testimonial-card {
+    background-color: var(--dark-mode-card-bg); /* Darker card background */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow for dark mode */
+}
+
+.dark-mode .testimonial-text {
     color: var(--dark-mode-text-color);
+}
+
+.dark-mode .testimonial-author {
+    color: var(--primary-color-dark-mode); /* Or a slightly different accent color for dark mode */
+}
+
+.dark-mode .testimonial-info {
+    color: var(--dark-mode-text-color-light);
+}
+
+.dark-mode .testimonial-email,
+.dark-mode .testimonial-relationship,
+.dark-mode .testimonial-date {
+    background-color: var(--dark-mode-bg-alt); /* A darker background for these tags */
+    color: var(--dark-mode-text-color);
+}
+
+.dark-mode .testimonial-form-section {
+    background-color: var(--dark-mode-card-bg);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .testimonial-form label {
+    color: var(--dark-mode-text-color);
+}
+
+.dark-mode .testimonial-form input[type="text"],
+.dark-mode .testimonial-form input[type="email"],
+.dark-mode .testimonial-form textarea,
+.dark-mode .testimonial-form select {
+    background-color: var(--dark-mode-bg-alt); /* Darker background for inputs */
+    border-color: var(--dark-mode-border-color);
+    color: var(--dark-mode-text-color);
+}
+
+.dark-mode .testimonial-form input::placeholder,
+.dark-mode .testimonial-form textarea::placeholder {
+    color: #888; /* Lighter placeholder text in dark mode */
+}
+
+.dark-mode .testimonial-form input[type="text"]:focus,
+.dark-mode .testimonial-form input[type="email"]:focus,
+.dark-mode .testimonial-form textarea:focus,
+.dark-mode .testimonial-form select:focus {
+    border-color: var(--primary-color-dark-mode);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.3);
 }
 
 /* Contact Section */
