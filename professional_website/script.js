@@ -1,6 +1,16 @@
 // professional_website/script.js
 
 document.addEventListener('DOMContentLoaded', () => {
+    // --- SUPABASE INITIALIZATION ---
+    // Your actual Supabase project URL and anon public key are inserted here.
+    const SUPABASE_URL = 'https://hndbkuhmvhzxhzpbnwyi.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhuZGJrdWhtdmh6eGh6cGJud3lpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM0MjcwOTUsImV4cCI6MjA2OTAwMzA5NX0.bsOuAUJ37eWJXDZLLxuSy8V5Ysn1wLlGmji7L1cWLYU';
+
+    // Initialize the Supabase client
+    const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // --- END SUPABASE INITIALIZATION ---
+
+
     // 1. Mobile Navigation Toggle (Hamburger Menu) - No change
     const mobileMenu = document.getElementById('mobile-menu');
     const navMenu = document.getElementById('nav-menu');
@@ -152,31 +162,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- REVISED: Testimonial Form & Display (Now interacts with a hypothetical Backend API) ---
+    // --- REVISED: Testimonial Form & Display (Now interacts with Supabase) ---
     const testimonialForm = document.getElementById('testimonial-form');
+    // IMPORTANT: Ensure this matches the ID in your HTML
     const testimonialsContainer = document.getElementById('testimonials-container');
 
-    // Function to fetch testimonials from the backend
+    // Function to fetch testimonials from Supabase
     async function fetchTestimonials() {
-        if (!testimonialsContainer) return; // Exit if container not found
-        testimonialsContainer.innerHTML = '<p class="loading-message">Loading testimonials...</p>'; // Loading state
+        if (!testimonialsContainer) return;
+        testimonialsContainer.innerHTML = '<p class="loading-message">Loading testimonials...</p>';
 
         try {
-            // Replace '/api/testimonials' with your actual backend endpoint
-            const response = await fetch('/api/testimonials');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            // Use Supabase client to select all rows from 'testimonials' table
+            const { data, error } = await supabase
+                .from('testimonials')
+                .select('*')
+                .order('created_at', { ascending: false }); // Order by newest first
+
+            if (error) {
+                throw error;
             }
-            const testimonials = await response.json();
-            renderTestimonials(testimonials); // Render fetched testimonials
+
+            renderTestimonials(data); // Render fetched testimonials
         } catch (error) {
-            console.error('Error fetching testimonials:', error);
+            console.error('Error fetching testimonials:', error.message);
             testimonialsContainer.innerHTML = '<p class="error-message">Failed to load testimonials. Please try again later.</p>';
             showMessage('Could not load testimonials. Check your connection.', 'error');
         }
     }
 
-    // Function to render testimonials
+    // Function to render testimonials (mostly no change, just rendering the data from Supabase)
     function renderTestimonials(testimonials) {
         if (testimonialsContainer) {
             testimonialsContainer.innerHTML = ''; // Clear existing testimonials
@@ -191,8 +206,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="testimonial-text">"${t.message}"</p>
                     <p class="testimonial-author">- ${t.author}</p>
                     <p class="testimonial-rating">Rating: ${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</p>
-                    ${t.date ? `<span class="testimonial-date">${new Date(t.date).toLocaleDateString()}</span>` : ''}
-                    `;
+                    <p class="testimonial-info">
+                        ${t.email ? `<span class="testimonial-email">${t.email}</span>` : ''}
+                        ${t.relationship ? `<span class="testimonial-relationship">(${t.relationship})</span>` : ''}
+                        ${t.created_at ? `<span class="testimonial-date">${new Date(t.created_at).toLocaleDateString()}</span>` : ''}
+                    </p>
+                `;
                 testimonialsContainer.appendChild(testimonialCard);
             });
         }
@@ -203,39 +222,43 @@ document.addEventListener('DOMContentLoaded', () => {
         testimonialForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            // Get values from the form fields using their 'name' attributes
             const author = testimonialForm.querySelector('[name="testimonial-author"]').value.trim();
+            const email = testimonialForm.querySelector('[name="testimonial-email"]').value.trim(); // New field
+            const relationship = testimonialForm.querySelector('[name="testimonial-relationship"]').value.trim(); // New field
             const message = testimonialForm.querySelector('[name="testimonial-message"]').value.trim();
             const rating = parseInt(testimonialForm.querySelector('[name="testimonial-rating"]').value);
 
-            if (!author || !message || isNaN(rating) || rating < 1 || rating > 5) {
-                showMessage('Please provide your name, a message, and a rating (1-5 stars).', 'error');
+            if (!author || !email || !relationship || !message || isNaN(rating) || rating < 1 || rating > 5) {
+                showMessage('Please fill in all fields correctly (Name, Email, Relationship, Message, and a valid Rating 1-5 stars).', 'error');
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showMessage('Please enter a valid email address for your testimonial.', 'error');
                 return;
             }
 
             showMessage('Submitting your testimonial...', 'info');
 
             try {
-                // Replace '/api/testimonials' with your actual backend endpoint for POST
-                const response = await fetch('/api/testimonials', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({ author, message, rating })
-                });
+                // Use Supabase client to insert a new row into 'testimonials' table
+                const { data, error } = await supabase
+                    .from('testimonials')
+                    .insert([
+                        { author: author, email: email, relationship: relationship, message: message, rating: rating } // Include new fields
+                    ]);
 
-                if (response.ok) {
-                    showMessage('Thank you for your feedback! Testimonial submitted.', 'success');
-                    testimonialForm.reset();
-                    fetchTestimonials(); // Re-fetch all testimonials to show the new one
-                } else {
-                    const errorData = await response.json(); // Assuming backend sends JSON errors
-                    showMessage(`Failed to submit testimonial: ${errorData.message || 'Server error'}`, 'error');
+                if (error) {
+                    throw error;
                 }
+
+                showMessage('Thank you for your feedback! Testimonial submitted.', 'success');
+                testimonialForm.reset();
+                fetchTestimonials(); // Re-fetch all testimonials to show the new one
             } catch (error) {
-                console.error('Error submitting testimonial:', error);
-                showMessage('There was a network error. Please try again.', 'error');
+                console.error('Error submitting testimonial:', error.message);
+                showMessage(`Failed to submit testimonial: ${error.message || 'Server error'}`, 'error');
             }
         });
     }
